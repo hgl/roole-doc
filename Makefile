@@ -5,6 +5,9 @@ base: | node_modules bower_components
 	@node_modules/.bin/grunt htmlmin
 	@cp -R img site
 
+gh-pages:
+	git clone -b gh-pages git@github.com:curvedmark/roole-doc.git gh-pages
+
 css: | node_modules
 	@roole --prefixes '' -o site/css roo/style.roo
 	@node_modules/.bin/autoprefixer site/css/style.css
@@ -22,6 +25,12 @@ js: | node_modules
 img: | node_modules node_modules/grunt-contrib-imagemin
 	@node_modules/.bin/grunt imagemin
 
+publish: | gh-pages site
+	@support/publish
+
+site:
+	@make
+
 node_modules:
 	@npm install
 
@@ -31,4 +40,4 @@ node_modules/grunt-contrib-imagemin:
 bower_components:
 	@node_modules/.bin/bower install
 
-.PHONY: all base css js
+.PHONY: all base css js img publish

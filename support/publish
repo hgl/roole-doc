@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+sha=$(git rev-parse HEAD)
+cd gh-pages
+git pull origin gh-pages
+cp -R ../site/* .
+git add .
+git commit -m "Updating to $sha"
+git push origin gh-pages
