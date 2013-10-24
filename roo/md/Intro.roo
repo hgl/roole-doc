@@ -1,9 +1,0 @@
-@media $mq-gt-sm {
-	.Intro {
-		margin: 120px 0;
-	}
-
-	.Intro-subtitle {
-		font-size: 26px;
-	}
-}

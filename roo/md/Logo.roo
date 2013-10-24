@@ -1,5 +1,0 @@
-@media $mq-gt-sm {
-	.Logo.toolbar {
-		display: block;
-	}
-}

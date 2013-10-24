@@ -1,9 +1,0 @@
-@media $mq-gt-sm {
-	.MainLinks {
-		@mixin .List.hor;
-	}
-
-	.MainLinks > li {
-		@mixin .List.hor > .List-item;
-	}
-}

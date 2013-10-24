@@ -1,8 +1,0 @@
-{
-	"private": true,
-	"name": "roole-doc",
-	"version": "0.0.0",
-	"devDependencies": {
-		"enquire": "2.x"
-	}
-}

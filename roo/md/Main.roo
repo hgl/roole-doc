@@ -1,5 +1,0 @@
-@media $mq-gt-sm {
-	.Main {
-		margin-bottom: 120px;
-	}
-}

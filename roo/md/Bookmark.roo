@@ -1,7 +1,0 @@
-@media $mq-gt-sm {
-	.Bookmark {
-		position: relative;
-		display: block;
-		top: -($height-global + 30px);
-	}
-}
