@@ -1,0 +1,27 @@
+.Global {
+	height: $height-global;
+}
+
+.Global-inner {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: $height-global;
+	z-index: 100;
+	background: $color-bg;
+}
+
+.Global.toolbar .Global-inner {
+	border-bottom: 1px solid $color-border;
+}
+
+@media $mq-lt-sm {
+	.Global.toolbar {
+		height: $height-toolbar;
+	}
+
+	.Global.toolbar .Global-inner {
+		height: $height-toolbar;
+	}
+}

@@ -1,0 +1,42 @@
+@media $mq-gt-sm {
+	.Nav-title {
+		display: none;
+	}
+
+	.Nav-list {
+		@mixin .List;
+		@mixin .List.hor;
+		position: fixed;
+		top: 0;
+		z-index: 200;
+	}
+
+	.Nav-list > li {
+		@mixin .List > .List-item;
+		@mixin .List.hor > .List-item;
+		padding: ($height-global - 30px) / 2 0;
+	}
+
+	.Nav-list > li > a {
+		display: block;
+		height: 30px;
+		line-height: 30px;
+		text-decoration: none;
+		padding: 0 $gutter;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.Nav-list > li.active > a {
+		color: $color-subtle;
+		text-decoration: none;
+	}
+
+	.Nav-list > li.em > a {
+		color: $color-bg;
+		background: $color-accent;
+		border-radius: 3px;
+		text-decoration: none;
+	}
+}

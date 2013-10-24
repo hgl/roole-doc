@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+for name in $(find site -name index.html); do
+	cat $name | support/normalize | support/compile | support/highlight > "$name.tmp"
+	mv -f "$name.tmp" $name
+done

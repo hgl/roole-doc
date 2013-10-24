@@ -1,0 +1,23 @@
+@media $mq-gt-sm {
+	.Editor-toolbar {
+		display: none;
+	}
+
+	.Editor-input,
+	.Editor-output {
+		top: $height-global;
+	}
+
+	.Editor-input {
+		right: 50%;
+	}
+
+	.Editor-output {
+		display: block;
+		left: 50%;
+	}
+
+	.Editor.css .Editor-input {
+		display: block;
+	}
+}

@@ -1,0 +1,5 @@
+@media $mq-gt-sm {
+	.SocialBtns > li.dem {
+		display: inline-block;
+	}
+}

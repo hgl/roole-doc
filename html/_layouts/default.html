@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% include meta.html %}
+	{% include styles.html %}
+</head>
+<body>
+{% include global.html %}
+{{ content }}
+{% if page.name != 'home' %}
+	<div class="Container">
+		{% include nav.html %}
+	</div>
+{% endif %}
+{% if page.name != 'try' %}{% include footer.html %}{% endif %}
+{% include scripts.html %}
+</body>
+</html>

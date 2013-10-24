@@ -1,0 +1,6 @@
+@media $mq-gt-sm {
+	.License {
+		display: block;
+		float: left;
+	}
+}

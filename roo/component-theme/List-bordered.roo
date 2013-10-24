@@ -1,0 +1,12 @@
+.List.bordered {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.List.bordered > .List-item {
+	border-top: 1px solid #ddd;
+
+	&:first-child {
+		border-top: none;
+	}
+}

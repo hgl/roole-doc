@@ -1,0 +1,10 @@
+@media $mq-gt-sm {
+	.Footer,
+	.Footer-inner {
+		height: $height-footer;
+	}
+
+	.Footer-inner {
+		line-height: $height-footer;
+	}
+}

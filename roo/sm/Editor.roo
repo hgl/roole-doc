@@ -1,0 +1,182 @@
+.Editor {
+
+}
+
+.Editor-toolbar {
+	position: absolute;
+	z-index: 300;
+	top: ($height-toolbar - 26px) / 2;
+	left: $gutter;
+	font-size: 14px;
+	height: 26px;
+	line-height: 26px;
+}
+
+.Editor-switch {
+	position: relative;
+	overflow: hidden;
+	background: $color-accent;
+	border-radius: 999em;
+	cursor: pointer;
+	user-select: none;
+}
+
+.Editor-switch-option {
+	position: relative;
+	z-index: 10;
+	float: left;
+	color: $color-bg;
+	width: 55px;
+	text-align: center;
+	margin-left: -8px;
+	transition: 200ms;
+}
+
+.Editor-switch-option:first-child {
+	color: $color-accent;
+	width: 70px;
+	margin-left: 0;
+}
+
+.Editor-switch-knob {
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	height: 26px - 3px * 2;
+	width: 70px - 3px * 2;
+	background: $color-bg;
+	border-radius: 999em;
+	transition: 200ms;
+}
+
+.Editor-switch.switched .Editor-switch-option {
+	color: $color-accent;
+}
+
+.Editor-switch.switched .Editor-switch-option:first-child {
+	color: $color-bg;
+}
+
+.Editor-switch.switched .Editor-switch-knob {
+	width: 55px - 3px * 2;
+	left: 70px + 3px - 8px;
+}
+
+.Editor-input,
+.Editor-output {
+	position: absolute;
+	top: $height-toolbar;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: $gutter 0 0 $gutter;
+	padding-bottom: 0
+}
+
+.Editor-input > textarea {
+	border: none;
+	resize: none;
+	outline: none;
+	width: 100%;
+	box-sizing: border-box;
+	tab-size: 2;
+	padding: 0 0 0 $gutter;
+	margin: 0;
+}
+
+.Editor-output {
+	display: none;
+	background: #f8f8f8;
+}
+.Editor-output.error {
+	background: #fff8f8;
+}
+
+.Editor-error {
+	position: absolute;
+	z-index: 10;
+	color: #fff;
+	background: #db3a73;
+	border-radius: 2px;
+	border-top-left-radius: 0;
+	padding: 1px 5px;
+	margin-top: 5px;
+}
+
+.Editor-error:before {
+	content: '';
+	position: absolute;
+	left: 0px;
+	top: -4px;
+	border: 4px solid transparent;
+	border-top-style: none;
+	border-bottom-color: #db3a73;
+}
+
+.Editor.css .Editor-input {
+	display: none;
+}
+
+.Editor.css .Editor-output {
+	display: block;
+}
+
+.Editor-input > textarea,
+.CodeMirror {
+	background: transparent;
+	font-family: $font-mono;
+	font-size: 14px;
+	line-height: 18px;
+	height: 100%;
+}
+
+.CodeMirror-gutters {
+	background-color: transparent;
+	border: none;
+
+	.error & {
+		background: #fff8fb;
+	}
+}
+
+.CodeMirror-lines,
+.CodeMirror pre {
+	padding: 0;
+}
+
+.CodeMirror-linenumber {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.CodeMirror-focused .CodeMirror-selected {
+        background-color: #b1d3ff;
+}
+
+.CodeMirror-scroll {
+	-webkit-overflow-scrolling: touch;
+}
+
+.cm-variable {
+    color: #4271ae;
+}
+
+.cm-at-rule,
+.cm-keyword {
+    font-weight: bolder;
+}
+
+.cm-string {
+    color: #718c00;
+}
+
+.cm-selector,
+.cm-tag,
+.cm-attribute {
+    color: #c82829;
+}
+
+.cm-comment,
+.cm-prompt {
+    color: #aaa;
+}

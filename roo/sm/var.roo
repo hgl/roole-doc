@@ -1,0 +1,33 @@
+$px2em = @function $px, $base = 16px {
+	@return ($px / $base)em;
+};
+
+$color-bg = #fff;
+$color-fg = #000;
+$color-accent = #147ee0;
+$color-subtle = #aaa;
+$color-link = $color-accent;
+$color-text = $color-fg;
+$color-subtitle = $color-subtle;
+$color-border = #ddd;
+$color-border-subtle = #eee;
+
+$font-serif = Georgia, Cambria, "Times New Roman", Times, serif;
+$font-sans = Helvetica, "Myriad Pro", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+$font-mono = Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+$font-heading = $font-sans;
+$font-text = $font-sans;
+$font-code = $font-mono;
+
+$gutter = 15px;
+
+$width-max = 768px;
+$width-toc = 180px;
+
+$mq-gt-sm = "(min-width: $width-max)";
+$mq-lt-sm = "(max-width: {$width-max - 1px})";
+
+$height-global = 60px;
+$height-toolbar = 45px;
+$height-nav-link = 30px;
+$height-footer = 60px;

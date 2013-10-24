@@ -1,0 +1,148 @@
+---
+title: Roole - A language that compiles to CSS
+name: home
+layout: default
+---
+
+<header class="Header em center">
+	<div class="Container">
+		<h1 class="FrontLogo"><img src="img/Logo.png" alt="Roole" width="423" height="117"> <span class="FrontLogo-subtitle">A language that compiles to CSS</span></h1>
+
+		<ul class="MainLinks">
+			<li class="em"><a href="/roole.js">Download Roole <span class="MainLinks-trivia">{{ site.version }}</span></a></li>
+			<li><a href="https://github.com/curvedmark/roole/blob/master/CHANGELOG.md">View Change Log</a></li>
+		</ul>
+
+		<ul class="SocialBtns">
+			<li><iframe width="85" height="20" src="http://ghbtns.com/github-btn.html?user=curvedmark&amp;repo=roole&amp;type=watch&amp;count=true"
+		  allowtransparency="true" frameborder="0" scrolling="0"></iframe></li>
+		  <li><iframe width="90" height="20" src="https://platform.twitter.com/widgets/tweet_button.html#count=horizontal&amp;url=roole.org&amp;text=Roole%20-%20A%20language%20that%20compiles to CSS&amp;via=curvedmark&amp;hashtags=roole,css,nodejs" allowtransparency="true" frameborder="0" scrolling="0"></iframe></li>
+		  <li class="dem"><iframe width="75" height="20" src="https://apis.google.com/u/0/_/+1/fastbutton?size=medium&amp;hl=en-US&amp;url=http%3A%2F%2Froole.org/" title="+1" allowtransparency="true" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></li>
+		  <li class="dem"><iframe width="85" height="20" src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Froole.org&amp;layout=button_count" allowtransparency="true" frameborder="0" scrolling="no"></iframe></li>
+		</ul>
+	</div>
+</header>
+
+<main class="Main">
+	<div class="Container">
+		<section class="Intro">
+			<header>
+				<h2 class="Intro-heading">Rich Dynamic Features</h2>
+				<p class="Intro-subtitle">Variables, loops, conditions, functions, etc</p>
+			</header>
+			<figure class="Snippet em">
+				<div class="Snippet-input">
+					<pre class="Snippet-text lang-roole"><code>
+						$ratio = @function $n, $sum {
+							@return (100 / $sum * $n)%;
+						};
+
+						$max = 4;
+						@for $i in 1..$max {
+							.span-{$i}of{$max} {
+								width: $ratio($i, $max);
+							}
+						}
+					</code></pre>
+				</div>
+				<div class="Snippet-output">
+					<pre class="Snippet-text lang-css"><code></code></pre>
+				</div>
+			</figure>
+		</section>
+		<section class="Intro">
+			<header>
+				<h2 class="Intro-heading">Powerful Rule Manipulation Ability</h2>
+				<p class="Intro-subtitle">Nesting, mixin, void, etc.</p>
+			</header>
+			<figure class="Snippet em">
+				<div class="Snippet-input">
+					<pre class="Snippet-text lang-roole"><code>
+						.btn {
+							display: inline-block;
+						}
+
+						.btn.large {
+							padding: 10px 15px;
+						}
+
+						.submit {
+							@mixin .btn;
+
+							@media (min-width: 768px) {
+								@mixin .btn.large;
+							}
+						}
+					</code></pre>
+				</div>
+				<div class="Snippet-output">
+					<pre class="Snippet-text lang-css"><code></code></pre>
+				</div>
+			</figure>
+		</section>
+		<section class="Intro">
+			<header>
+				<h2 class="Intro-heading">Auto-prefixing</h2>
+				<p class="Intro-subtitle">Write standard CSS code that works everywhere.</p>
+			</header>
+			<figure class="Snippet em">
+				<div class="Snippet-input">
+					<pre class="Snippet-text lang-roole"><code>
+						@keyframes round {
+							to {
+								border-radius: 50%;
+							}
+						}
+					</code></pre>
+				</div>
+				<div class="Snippet-output">
+					<pre class="Snippet-text lang-css"><code></code></pre>
+				</div>
+			</figure>
+		</section>
+		<section class="Intro">
+			<header>
+				<h2 class="Intro-heading">JavaScript Based</h2>
+				<p class="Intro-subtitle">Support Node.js and browsers. Embrace npm.</p>
+			</header>
+			<figure class="Snippet em">
+				<div class="Snippet-input">
+					<div class="Snippet-file">
+						<div class="Snippet-file-name">node_modules/tabs.roo/index.roo</div>
+						<pre class="Snippet-file-text lang-roole"><code>
+							.tabs {
+								overflow: hidden;
+							}
+
+							.tab {
+								float: left;
+							}
+					</code></pre>
+					</div>
+					<div class="Snippet-file">
+						<div class="Snippet-file-name">btn.roo</div>
+						<pre class="Snippet-file-text lang-roole"><code>
+							.btn {
+								display: inline-block;
+							}
+						</code></pre>
+					</div>
+					<pre class="Snippet-text lang-roole"><code>
+						@import 'tabs.roo';
+						@import './btn.roo';
+					</code></pre>
+				</div>
+				<div class="Snippet-output">
+					<pre class="Snippet-text lang-css"><code></code></pre>
+				</div>
+			</figure>
+		</section>
+		<section class="Intro">
+			<header>
+				<h2 class="Intro-heading">And More</h2>
+				<p class="Intro-subtitle">Explore the site to learn more.</p>
+			</header>
+			{% include nav.html %}
+		</section>
+	</div>
+</main>

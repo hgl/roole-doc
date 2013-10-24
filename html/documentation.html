@@ -1,0 +1,2212 @@
+---
+title: Roole Documentation
+name: documentation
+layout: default
+---
+
+
+<header>
+	<div class="Container">
+		<h1>The Roole lanuage documentation</h1>
+		<nav id="toc" class="Toc">
+			<ol>
+				<li class="active"><a href="#installation">Installation</a></li>
+				<li ><a href="#nesting">Nesting</a></li>
+				<li><a href="#comment">Comment</a></li>
+				<li><a href="#variable">Variable</a></li>
+				<li><a href="#interpolation">Interpolation</a></li>
+				<li><a href="#list">List</a></li>
+				<li><a href="#range">Range</a></li>
+				<li><a href="#member-expression">Member Expression</a></li>
+				<li><a href="#arithmetic-expression">Arithmetic Expression</a></li>
+				<li><a href="#unit">Unit</a></li>
+				<li><a href="#conditional">Conditional</a></li>
+				<li><a href="#loop">Loop</a></li>
+				<li><a href="#function">Function</a></li>
+				<li><a href="#mixin">Mixin</a></li>
+				<li><a href="#void">Void</a></li>
+				<li><a href="#importing">Importing</a></li>
+				<li><a href="#url">URL</a></li>
+				<li><a href="#scope">Scope</a></li>
+				<li><a href="#block">Block</a></li>
+				<li><a href="#builtin-function">Builtin Function</a></li>
+				<li><a href="#prefixing">Prefixing</a></li>
+			</ol>
+		</nav>
+	</div>
+</header>
+<main class="Main">
+	<div class="Container">
+		<article id="doc" class="Doc">
+			<section class="Doc-section">
+				<a class="Bookmark" id="installation"></a>
+				<h2 class="Doc-heading">Installation</h2>
+				<div class="Doc-content">
+					<h3>Browser</h3>
+					<p>Download the Roole script file from the home page and insert it into HTML:</p>
+					<figure class="Snippet">
+						<pre class="Snippet-text lang-html"><code>
+							<body>
+								<script src="/path/to/roole.js"></script>
+							</body>
+						</code></pre>
+					</figure>
+					<p>Then either link to external Roole files using <code>link</code> tag with <code>rel="stylesheet/roole"</code>:</p>
+					<figure class="Snippet">
+						<pre class="Snippet-text lang-html"><code>
+							<head>
+								<link rel="stylesheet/roole" href="/path/to/styles.roo">
+							</head>
+						</code></pre>
+					</figure>
+					<p>Or embed Roole code directly using <code>style</code> tag with <code>type="text/roole"</code>:</p>
+					<figure class="Snippet">
+							<pre class="Snippet-text lang-html"><code>
+								<head>
+									<style type="text/roole">
+									  body {
+											$margin = 0;
+											margin: $margin;
+									  }
+									</style>
+								</head>
+							</code></pre>
+					</figure>
+					<p>Make sure the script file is placed <em>after</em> Roole files/code.</p>
+					<h3>Node.js</h3>
+					<p>Install with npm:</p>
+					<figure class="Snippet">
+							<pre class="Snippet-text lang-cmd"><code>
+								$ npm install roole -g
+							</code></pre>
+					</figure>
+					<p>Then compile Roole files by running:</p>
+					<figure class="Snippet">
+							<pre class="Snippet-text lang-cmd"><code>
+								$ roole /path/to/style.roo
+							</code></pre>
+					</figure>
+					<p>Run <code>roole -h</code> to see more usage.</p>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="nesting"></a>
+				<h2 class="Doc-heading">Nesting</h2>
+				<div class="Doc-content">
+					<p>Rule sets can be nested, and their selectors will be joined together.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								#header {
+									.logo {
+										float: left;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								ul {
+									overflow: hidden;
+
+									> li {
+										float: left;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								#main, #sidebar {
+									h1, h2 {
+										font-weight: bold;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Use the <code>&</code> selector to reference the selector in the outer rule set.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									&:hover {
+										text-decoration: underline;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								img {
+									a & {
+										border: none;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>The <code>&</code> selector also can be nested.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									&:hover {
+										text-decoration: underline;
+										.btn & {
+											text-decoration: none;
+										}
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Media blocks can be nested into rule sets.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.sidebar {
+									@media print {
+										display: none;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.container {
+									@media print {
+										.sidebar {
+											display: none;
+										}
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Or within one another, and their media queries will be joined together.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@media screen {
+									a {
+										color: black;
+
+										@media (color) {
+											color: blue;
+										}
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="comment"></a>
+				<h2 class="Doc-heading">Comment</h2>
+				<div class="Doc-content">
+					<p>Single-line commnets are removed from the generated CSS.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									float: left;
+									margin-left: 20px;
+									// Fix IE6
+									display: inline;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Multi-line commnets are preserved.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								/*
+								 * Navigation
+								 */
+								.nav {
+									float: left;
+
+									/*
+									 * Navigation list
+									 */
+									> ul {
+										list-style: none;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								/*
+								 * Navigation
+								 */
+								.nav {
+									float: left;
+									/* Last comment in rule set */
+								}
+								/* Last comment in file */
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>When placed before non-CSS rules, multi-line commnets are transfered down to nestest CSS rules.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								/*
+								 * Navigation
+								 */
+								@if true {
+									.nav {
+										float: left;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								/*
+								 * Span
+								 */
+								@for $i in 1..2 {
+									.span-$i {
+										float: left;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="variable"></a>
+				<h2 class="Doc-heading">Variable</h2>
+				<div class="Doc-content">
+					<p>Variables are case-sensitive. Their names start with <code>$</code> and are defined using assignments.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margin = 20px 0;
+								$MARGIN = 30px 0;
+
+								p {
+									margin: $margin;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Variables are allowed where values like numbers, strings, identifiers, etc are allowed.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$tag = body;
+
+								$tag {
+									margin: 0;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$attribute = type;
+								$value = button;
+
+								input[$attribute=$value] {
+									border: none;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$property = margin;
+								$value = 20px;
+
+								p {
+									$property: $value;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$feature = max-width;
+								$value = 1024px;
+
+								@media ($feature: $value) {
+									#main {
+										width: 960px;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Variable scope is covered in the <a href="#scope">Scope</a> section</p>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="interpolation"></a>
+				<h2 class="Doc-heading">Interpolation</h2>
+				<div class="Doc-content">
+					<p>Variables can be interpolated into doubled-quoted strings.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$num = 12;
+
+								.heading::before {
+									content: "Chapter $num";
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>But not single-quoted strings.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.heading::before {
+									content: 'Chapter $num';
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Variables can also be interpolated into identifiers.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$name = star;
+
+								.icon-$name {
+									width: 20px;
+									height: 20px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$pos = left;
+
+								.sidebar {
+									float: $pos;
+									margin-$pos: 20px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Use <code>\$</code> to escape variables inside strings.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.heading::before {
+									content: "Chapter \$num";
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Wrap the variable in curly braces(<code>{}</code>) to seperate characters come after it, which would otherwise be part of its name.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$num = 4;
+
+								.figcaption::before {
+									content: "Figure {$num}-12";
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$pos = left;
+
+								.sidebar {
+									border-{$pos}-width: 1px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Use <code>\{</code> to escape it.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$num = 4;
+
+								.figcaption::before {
+									content: "Figure \{$num}-12";
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.title::before {
+									content: "latex \\hat\{x}";
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>You can actually put arbitrary expressions (more on expressions in later sections) inside curly braced interpolations.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.figcaption::before {
+								  content: "Figure {3 + 1}-12";
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>When being assigned with an string value, variables can be directly interpolated in to selectors.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$selector = '#sidebar a';
+
+								$selector {
+									color: blue;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$tab = '.tabs .tab';
+
+								#sidebar $tab {
+									padding: 5px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>When the variable is the only thing in the selector, selector list can be interpolated.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$btns = '.submit, .reset';
+
+								$btns {
+									padding: 5px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$tab = '.tabs .tab';
+								$btns = '.submit, .reset';
+
+								#sidebar $tab,
+								$btns {
+									padding: 5px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>The same goes for media queries.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$mq = '(min-width: 768px)';
+
+								@media $mq {
+									body {
+										margin: 0;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$mq = '(min-width: 768px), (color)';
+
+								@media $mq {
+									body {
+										margin: 0;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="list"></a>
+				<h2 class="Doc-heading">List</h2>
+				<div class="Doc-content">
+					<p>Lists are one of the many basic values Roole support. They are values separated by either spaces, commas(<code>,</code>) or slashes(<code>/</code>).</p>
+					<p>For example, <code>1px 2px 3px</code>, <code>sans-serif, serif</code>, <code>14px/1.2</code>.</p>
+					<p>Note that <code>14px/1.2 sans-serif</code> is a list with three items separated by a slash and a space.</p>
+					<p>Lists can be wrapped in square brackets(<code>[]</code>). When there are more than one item, the square brackets are optional.</p>
+					<p>Square brackets are useful when you need to create emtpy lists(<code>[]</code>), lists with only item(e.g., <code>[1]</code>) or nested lists(e.g., <code>[1px, [2px, 3px]]</code>).</p>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="range"></a>
+				<h2 class="Doc-heading">Range</h2>
+				<div class="Doc-content">
+					<p>Ranges are another basic values Roole support.</p>
+					<p>They are two numberic values(e.g, <code>1px</code>, <code>20%</code>, <code>0</code>) separated by either <code>..</code> or <code>...</code>.</p>
+					<p>They denote ranges that can be used directly in some consturcts (e.g., loops, member expressions) or be converted to lists when compiled to CSS.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: 1px..3px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>When being converted a to list, the list is separated by spaces, with the left numberic value determining the unit of all items in the list.   For example, <code>1px..3</code> will be converted to <code>1px 2px 3px</code>.</p>
+					<p><code>..</code> creates inclusive ranges whereas <code>...</code> creates exclusive ranges. The difference is that for exclusive ranges, the right values are excluded.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: 1px...3px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Ranges can be in reversed order.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: 3px..1px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: 3px...1px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: 1px..-1px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="member-expression"></a>
+				<h2 class="Doc-heading">Member Expression</h2>
+				<div class="Doc-content">
+					<p>Items in a list can be accessed using member expressions.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+
+								.box {
+									margin-top: $margins[0];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Index can also be a range, which will return a sub-list.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+
+								.box {
+									margin: $margins[0..1];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+
+								.box {
+									margin: $margins[1...3];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>When a list is being accessed with a range, the result is guaranteed to be a list, even if the range denotes only one item.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+
+								.box {
+									margin: $margins[2...3][0];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Accessing with an empty range returns an empty list.</p>
+					<p>Negative indice start from the end of the list.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+
+								.box {
+									margin-top: $margins[-1];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+
+								.box {
+									margin: $margins[-2..-1];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Reversed ranges reverse the result list.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+
+								.box {
+									margin: $margins[2..1];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+
+								.box {
+									margin: $margins[-1..-2];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Ranges can be accessed as if they were lists.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px..4px;
+
+								.box {
+									margin-top: $margins[0];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px..4px;
+
+								.box {
+									margin: $margins[0..1];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Member expressions can also be used in assignments.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+								$margins[1] = 12px;
+
+								.box {
+									margin: $margins;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+								$margins[1..2] = 12px, 13px;
+
+								.box {
+									margin: $margins;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+								$margins[2..1] = 12px, 13px;
+
+								.box {
+									margin: $margins;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Assigning to an index that is outside the list automatically grows the list, and "holes" with be filled with <code>null</code>s.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px;
+								$margins[3] = 4px;
+
+								.box {
+									margin: $margins;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px;
+								$margins[2..3] = 3px 4px;
+
+								.box {
+									margin: $margins;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Empty ranges can be used to insert items.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 4px;
+								$margins[2...2] = 3px;
+
+								.box {
+									margin: $margins;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Assignming with a empty list removes items.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px;
+								$margins[1] = [];
+
+								.box {
+									margin: $margins;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$margins = 1px 2px 3px 4px;
+								$margins[1..2] = [];
+
+								.box {
+									margin: $margins;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="arithmetic-expression"></a>
+				<h2 class="Doc-heading">Arithmetic Expressions</h2>
+				<div class="Doc-content">
+					<p>Arithmetic operators for doing addition(<code>+</code>), substraction(<code>-</code>), multiplication(<code>*</code>), division(<code>/</code>) and modulus(<code>%</code>) are supported. Use parentheses <code>()</code> to change precedence.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$w = 250px;
+								$p = 20px;
+								$b = 1px;
+
+								.sidebar {
+									width: $w - ($p + $b) * 2;
+									padding: $p;
+									border: $b solid;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>At lease one space should exist around <code>/</code>, otherwise it is recognized as a list separator</p>
+					<p>At lease one space should exist on the right side of <code>+</code> and <code>-</code>, or no space exists on either side, otherwise unary <code>+</code> and <code>-</code> is applied:</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: 40px -20px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: 40px +20px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Arithmetic operations in <code>calc()</code> are preserved in the generated CSS.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: calc(250px - 50%);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="unit"></a>
+				<h2 class="Doc-heading">Unit</h2>
+				<div class="Doc-content">
+					<p>Directly appending a unit after a numberic value to change its unit.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									margin: (32px / 16px)em;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Remember to multiply the value by 100 when converting to percentage.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									width: (200px / 800px * 100)%;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="conditional"></a>
+				<h2 class="Doc-heading">Conditional</h2>
+				<div class="Doc-content">
+					<p>Nest rules inside <code>@if</code> to generate them conditionally.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$support-old-ie = false;
+
+								li {
+									@if $support-old-ie {
+										display: inline;
+									}
+									float: left;
+									margin-left: 10px;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Conditon expressions are automatically converted to booleans. Faley values include <code>false</code>, <code>null</code>, zero-ish numberic values(e.g, <code>0</code>, <code>0px</code>, <code>0%</code>), empty strings(e.g, <code>''</code>). All other values are truthy (including <code>[]</code>, <code>'0'</code>).</p>
+					<p><code>@if</code> can be followed by any number of <code>@else if</code>s and optionally one <code>@else</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$color = #000;
+
+								body {
+									@if $color is #fff {
+										background: #000;
+									} @else if $color is #00 {
+										background: #fff;
+									} @else {
+										background: url(bg.png);
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Many operators can be used when specifying the condition.</p>
+					<p>Like <code>is</code>, which tests equalitys, <code>isnt</code> tests inequality.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$size = large;
+
+								.btn {
+									@if $size isnt small {
+										border: 1px solid;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p><code>and</code> expects values on its both sides to be truthy. It is short-circuited, meaning the right value is not evaluated if the left value is falsey.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$size = large;
+								$type = split;
+
+								.btn {
+									@if $size is large and $type is split {
+										padding: 10px;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p><code>or</code> expects values on its either sides to be truthy. It is short-circuited, meaning the right value is not evaluated if the left value is truthy.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$size = large;
+
+								.btn {
+									@if $size is medium or $size is large {
+										border: 1px solid;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p><code><</code>, <code><=</code>, <code>></code> and <code>>=</code> compare values.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$w = 60px;
+
+								.btn {
+									@if $w > 50px and $w < 90px {
+										border: 1px solid;
+									} @else {
+										border: none;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="loop"></a>
+				<h2 class="Doc-heading">Loop</h2>
+				<div class="Doc-content">
+					<p>Loops allow rules to be generated multiple times. Ranges can be directly looped over.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@for $i in 1..3 {
+									.span-$i {
+										width: $i * 60px;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@for $i in 3..1 {
+									.span-$i {
+										width: $i * 60px;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Lists can also be looped.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@for $name in arrow star heart {
+									.icon-$name {
+										background: url("$name.png");
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>To specify a step other than 1, use <code>by</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@for $i by 2 in 1..5 {
+									.span-$i {
+										width: $i * 60px;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@for $name by 2 in arrow star heart {
+									.icon-$name {
+										background: url("$name.png");
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>If step is a negative number, the order of iteration is reversed.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@for $i by -1 in 1..2 {
+									.span-$i {
+										width: $i * 60px;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@for $name by -1 in arrow star heart {
+									.icon-$name {
+										background: url("$name.png");
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>To access indices, specify one more variable.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@for $name, $i in arrow star heart {
+									.icon-$name {
+										background-position: 0 $i * 20px;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="function"></a>
+				<h2 class="Doc-heading">Function</h2>
+				<div class="Doc-content">
+					<p>Functions can be assigned to variables, and be used later by calling the variables.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$half = @function {
+									@return 100 / 2%;
+								};
+
+								.span-half {
+									width: $half();
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Functions can have parameters, which can have a default value.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$px2em = @function $px, $base = 16px {
+									@return $px / $base * 1em;
+								};
+
+								h2 {
+									font-size: $px2em(32px);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Arguments passed to a function can also be accessed dynamically using <code>$arguments</code></p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$double = @function {
+									$list = [];
+									@for $arg, $i in $arguments {
+										$list[$i] = $arg * 2;
+									}
+									@return $list;
+								};
+
+								.box {
+									margin: $double(1px, 2px, 3px);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Use rest parameter to capture multiple arguments.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$multiply = @function $multi, ...$nums {
+									$list = [];
+									@for $num, $i in $nums {
+										$list[$i] = $num * $multi;
+									}
+									@return $list;
+								};
+
+								.box {
+									margin: $multiply(3, 1px, 2px, 3px);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Unassigned parameters have a value <code>null</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$retArgs = @function $a, $b {
+									@return $a $b;
+								};
+
+								.heading {
+									font-size: $retArgs(1px);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="mixin"></a>
+				<h2 class="Doc-heading">Mixin</h2>
+				<div class="Doc-content">
+					<p>Functions can be mixed in when they contain rules, and are called after <code>@mixin</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$btn = @function $color, $bg-color {
+									display: inline-block;
+									color: $color;
+									background: $bg-color;
+								};
+
+								.submit {
+									@mixin $btn(#000, #fff);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Rule sets can be mixed in if a selector or a list of selectors are specified after <code>@mixin</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.btn {
+									display: inline-block;
+								}
+
+								.submit {
+									@mixin .btn;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p><code>@mixin</code> can be nested inside media blocks.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.btn.large {
+									padding: 10px 15px;
+								}
+
+								@media (min-width: 768px) {
+									.submit {
+										@mixin .btn.large;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="void"></a>
+				<h2 class="Doc-heading">Void</h2>
+				<div class="Doc-content">
+				<p>Rule sets inside <code>@void</code> are removed from the generated CSS.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@void {
+									.btn {
+										display: inline-block;
+									}
+								}
+
+								.submit {
+									@mixin .btn;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>This is useful for creating base styles that should not be used directly in the CSS.</p>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="importing"></a>
+				<h2 class="Doc-heading">Importing</h2>
+				<div class="Doc-content">
+					<p>Import files by specifying a string after <code>@import</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">btn.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.btn {
+										display: inline-block;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import './btn.roo';
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>If the file being imported is a directory, Roole will first look for a <code>package.json</code> file in that directory, which is <a href="https://npmjs.org/doc/json.html">npm's package.json</a>. If it exists, Roole will import the file specifed in the JSON's <code>main</code> property. If no such file exist, it will import <code>index.roo</code> in that directory.</p>
+					<p>Extension names are not added automatically, so you need to specifiy them explicitly.</p></p>
+					<p>Files are not imported if their paths are sepecified using <code>url()</code> or starting with a protocol.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@import url(./tabs);
+
+								@import url("./tabs");
+
+								@import "http://example.com/tabs";
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Variables can be used in the path.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">btn.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.btn {
+										display: inline-block;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								$module = 'btn';
+								@import "./$module.roo";
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Regular CSS files can be imported, so you may interact with existing CSS libraries.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">btn.css</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.btn {
+										display: inline-block;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import "./btn.css";
+
+								.submit {
+									@mixin .btn;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p><code>@import</code> with media queries will be converted to media blocks.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">btn.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.btn {
+										display: inline-block;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import "./btn.roo" screen;
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Files are only imported once.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">reset.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									body {
+										margin: 0;
+									}
+								</code></pre>
+							</div>
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">btn.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									@import './reset.roo';
+
+									.btn {
+										display: inline-block;
+									}
+								</code></pre>
+							</div>
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">tabs.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									@import './reset.roo';
+
+									.tab {
+										float: left;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import './reset.roo';
+								@import './btn.roo';
+								@import './tabs.roo';
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>If the path does not start with <code>./</code>, <code>../</code> or <code>/</code>, then Roole will try to import it as a node module</p>
+					<p>Node modules exists in a <code>node_modules</code> folder. Refer to <a href="http://nodejs.org/docs/latest/api/modules.html#modules_loading_from_node_modules_folders">Node.js docs</a> on how that folder is located.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">node_modules/tabs.roo/index.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.tab {
+										float: left;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import 'tabs.roo';
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p><code>@import</code> can be nested inside other rules.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">sidebar.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.sidebar {
+										float: left;
+										margin-left: 20px;
+									}
+								</code></pre>
+							</div>
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">sidebar-old-ie.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.sidebar {
+										display: inline;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								$support-old-ie = false;
+
+								@import './sidebar.roo';
+
+								@if $support-old-ie {
+									@import './sidebar-old-ie.roo';
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="url"></a>
+				<h2 class="Doc-heading">URL</h2>
+				<div class="Doc-content">
+					<p>Relative paths in Roole will be translated when compiled to CSS.</p>
+					<p>Relative paths starting <code>./</code> or <code>../</code> are relative to the current file.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">btn/btn.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.btn {
+										background: url(./bg.png);
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import './btn/btn.roo';
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Relative paths does not start with <code>./</code> and <code>../</code> are relative to a base directory. For Node.js, it's the current working directory. For browsers, it's the directory of the HTML page.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">btn/btn.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.btn {
+										background: url(bg.png);
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import './btn/btn.roo';
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Absolute paths are never translated.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">btn/btn.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.btn {
+										background: url(/bg.png);
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import './btn/btn.roo';
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="scope"></a>
+				<h2 class="Doc-heading">Scope</h2>
+				<div class="Doc-content">
+					<p>Variables have to be defined before they can be used. Once defined, they are only available within the boundary of their respective rule block, which defines their scope.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$menu = @function {
+									$width = 200px;
+									width: $width;
+								};
+
+								.menu {
+									@mixin $menu();
+									// $width is undefined here
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Varaibles assigned using <code>=</code> assignments always "shadow" variables with the same name in an outer scope, but never overwrite them.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$width = 200px;
+
+								.mini-menu {
+									$width = 100px;
+									width: $width;
+								}
+
+								.menu {
+									width: $width;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Use <code>:=</code> assignments to overwrite variables in an outer scope.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$width = 200px;
+
+								.mini-menu {
+									$width := 100px;
+									width: $width;
+								}
+
+								.menu {
+									width: $width;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p><code>?=</code> assignments will assign variables a value only if they haven't been defined.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$width = 200px;
+
+								.mini-menu {
+									$width ?= 100px;
+									width: $width;
+								}
+
+								.menu {
+								  width: $width;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Variables created by <code>?=</code> assignments are local to the current scope.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.mini-menu {
+									$width ?= 100px;
+									width: $width;
+								}
+
+								// $width is undefined here
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Variables defined in an imported file are exposed to the importing file.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">vars.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									$color = #000;
+									$bg-color = #fff;
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@import './vars.roo';
+
+								.main {
+									color: $color;
+									background: $bg-color;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>The imported file has access to variables defined in the importing file.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">base.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									.main {
+										color: $color;
+										background: $bg-color;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								$color = #000;
+								$bg-color = #fff;
+
+								@import './base.roo';
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Functions have lexical scope.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								$width = 200px;
+
+								$menu = @function {
+									width: $width;
+								};
+
+								.menu {
+									$width = 300px;
+									@mixin $menu();
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="block"></a>
+				<h2 class="Doc-heading">Block</h2>
+				<div class="Doc-content">
+					<p>Blocks simply introduce a new scope.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">node_modules/foo-framework/index.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									$width ?= 200px;
+
+									.foo-module {
+										width: $width;
+									}
+								</code></pre>
+							</div>
+							<div class="Snippet-file">
+								<div class="Snippet-file-name">node_modules/bar-framework/index.roo</div>
+								<pre class="Snippet-file-text lang-roole"><code>
+									$width ?= 100px;
+
+									.bar-module {
+										width: $width;
+									}
+								</code></pre>
+							</div>
+							<pre class="Snippet-text lang-roole"><code>
+								@block {
+									$width = 300px;
+									@import 'foo-framework';
+								}
+
+								@block {
+									@import 'bar-framework';
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="builtin-function"></a>
+				<h2 class="Doc-heading">Builtin Function</h2>
+				<div class="Doc-content">
+					<p>Builtin functions are global function available to all scopes. There is no need to import any file to use them.</p>
+					<h3>$len($value)</h3>
+					<p>Return the length of a value.</p>
+					<p>For lists and ranges, it's the number of items they contain. For strings, it's the length of characters. For other values, it returns <code>1</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									content: $len(0 1);
+									content: $len(1..3);
+									content: $len('text');
+									content: $len(2px);
+									content: $len(null);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<h3>$list($value, [$sep])</h3>
+					<p>Convert <code>$value</code> to list, optionally with <code>$sep</code> being the separator (defaults to space if not provided).</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									content: $list(1..3);
+									content: $list(0 1, ',');
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<h3>$push($list, ...$vals)</h3>
+					<p>Push value to the end of <code>$list</code>. Return <code>$list</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									content: $push(0 1, 2);
+									content: $push([1, 2], 3, 4);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<h3>$pop($list)</h3>
+					<p>Pop value from the end of <code>$list</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									content: $pop(0 1);
+									content: $pop([1, 2]);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<h3>$unshift($list, ...$vals)</h3>
+					<p>Unshift values to the start of <code>$list</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									content: $unshift(0 1, -1);
+									content: $unshift([1, 2], -1, 0);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<h3>$shift($list)</h3>
+					<p>Shift a value from the start of <code>$list</code>.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									content: $shift(0 1);
+									content: $shift([1, 2]);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<h3>$opp($value)</h3>
+					<p>Return the opposite value of a string or an identifier denoting a position.</p>
+					<p><code>$value</code> can be a list, in which case all items of it are translated.</p>
+					<p>The opposite of <code>right</code> is <code>left</code>, <code>top</code> is <code>bottom</code> and vice versa. All other values stay the same value.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								a {
+									content: $opp(to bottom right);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<h3>$img-size($path)</h3>
+					<p>Return the image dimension locationed at <code>$path</code>. <code>$path</code> is the image file path follows the same rule explained in the <a href="#url">URL</a> section. The returning value is a list, with the first item being the width and the second being the height.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.img {
+									$size = $img-size('20x10.png');
+									width: $size[0];
+									height: $size[1];
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code>
+								.img {
+									width: 20px;
+									height: 10px;
+								}
+							</code></pre>
+						</div>
+					</figure>
+				</div>
+			</section>
+			<section class="Doc-section">
+				<a class="Bookmark" id="prefixing"></a>
+				<h2 class="Doc-heading">Prefixing</h2>
+					<div class="Doc-content">
+					<p>Rules are automatically prefixed with vendor names.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									box-shadow: 0 1px 3px #000;
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Start position in <code>linear-gradient()</code> is automatically translated (this is not currently perfect, as angle values are not translated and no <code>-webkit-gradient()</code> generated).</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								.box {
+									background: linear-gradient(to bottom, #fff, #000);
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>When nested rules need to be prefixed, Roole handles it correctly.</p>
+					<figure class="Snippet">
+						<div class="Snippet-input">
+							<pre class="Snippet-text lang-roole"><code>
+								@keyframes become-round {
+									from {
+										border-radius: 0;
+									}
+									to {
+										border-radius: 50%;
+									}
+								}
+							</code></pre>
+						</div>
+						<div class="Snippet-output">
+							<pre class="Snippet-text lang-css"><code></code></pre>
+						</div>
+					</figure>
+					<p>Until the prefixing feature is revamped. You are encouraged to use <a href="https://github.com/ai/autoprefixer/">Autoprefixer</a> to prefix the generated CSS.</p>
+				</div>
+			</section>
+		</article>
+	</div>
+</main>

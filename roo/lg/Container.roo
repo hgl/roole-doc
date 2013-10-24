@@ -1,0 +1,6 @@
+@media $mq-gt-md {
+	.Container {
+		width: $width-min - $gutter * 2;
+		margin: 0 auto;
+	}
+}

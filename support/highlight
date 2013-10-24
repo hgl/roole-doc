@@ -1,0 +1,81 @@
+#!/usr/bin/env node
+
+/**
+ * Highlight code block
+ */
+
+var util = require('util');
+var Transform = require('stream').Transform;
+var join = require('path').join;
+var fs = require('fs');
+var cheerio = require('cheerio');
+var CodeMirror = require('codemirror-highlight');
+var $;
+
+CodeMirror.loadMode('javascript');
+CodeMirror.loadMode('xml');
+var rooleMode = fs.readFileSync(join(__dirname, 'roole-mode.js'), 'utf8');
+var cssMode = fs.readFileSync(join(__dirname, 'css-mode.js'), 'utf8');
+var htmlmixedMode = fs.readFileSync(join(__dirname, 'htmlmixed-mode.js'), 'utf8');
+var cmdMode = fs.readFileSync(join(__dirname, 'cmd-mode.js'), 'utf8');
+eval(rooleMode);
+eval(cssMode);
+eval(htmlmixedMode);
+eval(cmdMode);
+
+function Highlight() {
+	Transform.call(this, { decodeStrings: false });
+	this._html = '';
+}
+util.inherits(Highlight, Transform);
+
+Highlight.prototype._transform = function (chunk, enc, cb) {
+	this._html += chunk;
+	cb();
+};
+
+Highlight.prototype._flush = function (cb) {
+	$ = cheerio.load(this._html);
+	var pres = $('pre[class*=" lang-"],pre[class^="lang-"]');
+	pres.each(function (i, pre) {
+		highlightCode(pre);
+	});
+	this.push($.html());
+	cb();
+};
+
+function highlightCode(pre) {
+	pre = $(pre);
+
+	var lang;
+	var classNames = pre.attr('class').split(/\s+/);
+	for (var i = 0, len = classNames.length; i < len; ++i) {
+		var className = classNames[i];
+		var result = /^lang-(\w+)$/.exec(className);
+		if (result) {
+			lang = result[1];
+			break;
+		}
+	}
+
+	if (lang === 'html') lang = 'htmlmixed';
+	if (!CodeMirror.modes[lang]) return;
+
+	var mode = { mode: lang, tabSize: 2 };
+	if (lang === 'htmlmixed') {
+		mode.mode = {
+			name: lang,
+			styleTypes: [{
+				matches: 'text/roole',
+				mode: 'roole'
+			}]
+		};
+	}
+
+	var text = pre.text()
+	var highlighted = CodeMirror.highlight(text, mode);
+	pre.children('code').html(highlighted);
+}
+
+var highlight = new Highlight();
+process.stdin.pipe(highlight).pipe(process.stdout);

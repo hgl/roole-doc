@@ -1,0 +1,35 @@
+.Btn {
+	display: inline-block;
+	font-size: 14px;
+	background: transparent;
+	padding: 5px $gutter;
+	border: none;
+}
+
+.Btn.lg {
+	font-size: 18px;
+	padding: 10px $gutter * 2;
+}
+
+.Btn.em {
+	text-decoration: none;
+	text-shadow: rgba(0, 0, 0, 0.8) 0 1px;
+	color: #fff;
+	border: 1px solid #3186ca;
+	background-image: linear-gradient(#39a0ef, #257ee9);
+	background-color: #208fe5;
+	border-radius: 5px;
+	box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 3px #ccc;
+
+	&:active {
+		border-color: transparent;
+		background-image: linear-gradient(#257ee9, #39a0ef);
+		box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+		text-shadow: none;
+	}
+}
+
+.Btn.em .Btn-text.subtle {
+    color: rgba(255, 255, 255, 0.6);
+    text-shadow: none;
+}

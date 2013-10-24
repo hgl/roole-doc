@@ -1,0 +1,12 @@
+.Logo {
+	float: left;
+	margin-top: ($height-global - $img-size('img/logo-mini.png')[1]) / 2;
+}
+
+.Logo img {
+	vertical-align: top;
+}
+
+.Logo.toolbar {
+	display: none;
+}

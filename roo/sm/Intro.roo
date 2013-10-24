@@ -1,0 +1,13 @@
+.Intro {
+	margin: 80px 0;
+}
+
+.Intro-heading {
+	margin: 0;
+}
+
+.Intro-subtitle {
+	font-size: 20px;
+	color: $color-subtitle;
+	margin: 0 0 30px;
+}

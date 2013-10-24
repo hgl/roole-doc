@@ -1,0 +1,17 @@
+@media $mq-gt-sm {
+	.Doc {
+		margin-right: $width-toc;
+	}
+
+	.Doc-section {
+		margin-bottom: 120px;
+	}
+
+	.Doc-section.active .Doc-heading {
+		margin-bottom: 0;
+	}
+
+	.Doc-content {
+		display: block;
+	}
+}

@@ -1,0 +1,12 @@
+@media $mq-gt-sm {
+	.Global-inner {
+		position: fixed;
+		z-index: 100;
+		background: rgba(255, 255, 255, 0.95);
+		height: $height-global;
+	}
+
+	.Global.em .Global-inner {
+		box-shadow: 0 1px 3px #ddd;
+	}
+}

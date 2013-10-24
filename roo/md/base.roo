@@ -1,0 +1,18 @@
+@media $mq-gt-sm {
+	body {
+		font-size: 18px;
+	}
+
+	h1 {
+		font-size: 48px;
+		margin: 60px 0 60px;
+	}
+
+	h2 {
+		font-size: 32px;
+	}
+
+	h3 {
+		font-size: 26px;
+	}
+}

@@ -1,0 +1,6 @@
+@media $mq-gt-sm {
+	.Header.em {
+		text-align: left;
+		margin: 160px 0;
+	}
+}

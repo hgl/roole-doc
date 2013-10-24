@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+
+/**
+ * Compile embeded Roole code
+ */
+
+var util = require('util');
+var Transform = require('stream').Transform;
+var cheerio = require('cheerio');
+var roole = require('roole');
+var $;
+
+function Compile() {
+	Transform.call(this, { decodeStrings: false });
+	this._html = '';
+}
+util.inherits(Compile, Transform);
+
+Compile.prototype._transform = function (chunk, enc, cb) {
+	this._html += chunk;
+	cb();
+};
+
+Compile.prototype._flush = function (cb) {
+	$ = cheerio.load(this._html);
+	var snippets = $('.Snippet');
+	var length = snippets.length;
+	if (!length) {
+		this.push(this._html);
+		cb();
+	}
+
+	var self = this;
+	snippets.each(function (i, snippet) {
+		compileSnippet(snippet, function () {
+			if (--length) return;
+			self.push($.html());
+			cb();
+		});
+	});
+};
+
+function compileSnippet(snippet, cb) {
+	snippet = $(snippet);
+
+	var output = snippet.find('.Snippet-output>.Snippet-text>code');
+	if (!output.length || output.text()) return cb();
+
+	var input = snippet.find('.Snippet-input>.Snippet-text>code');
+	var code = input.text();
+
+	var files = snippet.find('.Snippet-file');
+	var imports = {};
+	files.each(function (i, file) {
+		file = $(file);
+
+		var filename = file.find('.Snippet-file-name').text();
+		filename = '/' + filename;
+
+		var filetext = file.find('.Snippet-file-text>code');
+		var code = filetext.text();
+
+		imports[filename] = code;
+	});
+
+	roole.compile(code, {
+		filename: '/index.roo',
+		base: '/',
+		indent: '  ',
+		imports: imports
+	}, function (err, css) {
+		if (err) {
+			console.error(err.toString() + '\n\n' + err.context());
+			process.exit(1);
+		}
+
+		output.text(css);
+		cb();
+	});
+}
+
+var compie = new Compile();
+process.stdin.pipe(compie).pipe(process.stdout);

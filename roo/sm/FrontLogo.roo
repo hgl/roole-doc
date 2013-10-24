@@ -1,0 +1,18 @@
+.FrontLogo {
+	border: none;
+	margin: 0;
+}
+
+.FrontLogo img {
+	max-width: 100%;
+	height: auto;
+	vertical-align: top;
+}
+
+.FrontLogo-subtitle {
+	display: block;
+	font-weight: normal;
+	color: $color-subtle;
+	font-size: 20px;
+	margin-top: 5px;
+}

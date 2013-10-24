@@ -1,0 +1,37 @@
+@media $mq-lt-sm {
+	.Doc-heading {
+		cursor: pointer;
+		font-size: 22px;
+		font-weight: normal;
+		border-bottom: 1px solid $color-border-subtle;
+		padding: 10px 0;
+		margin: 0;
+	}
+
+	.Doc-heading:before {
+		content: '';
+		display: inline-block;
+		$size = $img-size('img/arrow-right.png');
+		width: $size[0];
+		height: $size[1];
+		background: url(/img/arrow-right.png) no-repeat;
+		margin-right: 10px;
+		transition: 200ms;
+	}
+}
+
+.Doc-content {
+	display: none;
+}
+
+.Doc-section.active .Doc-heading {
+	margin-bottom: 30px;
+}
+
+.Doc-section.active .Doc-heading:before {
+	transform: rotate(90deg);
+}
+
+.Doc-section.active .Doc-content {
+	display: block;
+}

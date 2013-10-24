@@ -1,0 +1,7 @@
+$height-footer = 80px;
+
+$width-min = $width-max;
+$width-max = 990px;
+
+$mq-gt-md = "(min-width: $width-max)";
+$mq-lt-md = "(max-width: {$width-max - 1px})";

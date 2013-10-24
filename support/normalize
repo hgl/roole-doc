@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+/**
+ * Escape and unindent embeded code block
+ */
+
+var util = require('util');
+var Transform = require('stream').Transform;
+var escape = require('escape-html');
+var unindent = require('unindent');
+var codeRe = /(<code[^>]*?>)([\s\S]*?)(<\/code>)/g;
+
+function Normalize() {
+	Transform.call(this, { decodeStrings: false });
+	this._html = '';
+}
+util.inherits(Normalize, Transform);
+
+Normalize.prototype._transform = function (chunk, enc, cb) {
+	this._html += chunk;
+	cb();
+};
+
+Normalize.prototype._flush = function (cb) {
+	var html = this._html.replace(codeRe, function (str, startTag, code, endTag) {
+		var escaped = escape(code);
+		var unindented = unindent(escaped, { tabSize: 2, trim: true });
+		return startTag + unindented + endTag;
+	});
+	this.push(html);
+	cb();
+};
+
+var normalize = new Normalize();
+process.stdin.pipe(normalize).pipe(process.stdout);

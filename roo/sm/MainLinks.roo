@@ -1,0 +1,22 @@
+.MainLinks {
+	@mixin .List;
+	margin: 60px 0;
+}
+
+.MainLinks > li {
+	@mixin .List > .List-item;
+}
+
+.MainLinks > li > a {
+	@mixin .Btn;
+	@mixin .Btn.lg;
+}
+
+.MainLinks > li.em > a {
+	@mixin .Btn.em;
+	text-decoration: none;
+}
+
+.MainLinks > li.em .MainLinks-trivia {
+	@mixin .Btn.em .Btn-text.subtle;
+}

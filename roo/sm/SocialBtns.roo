@@ -1,0 +1,18 @@
+.SocialBtns {
+	@mixin .List;
+	@mixin .List.inline;
+}
+
+.SocialBtns > li {
+	@mixin .List > .List-item;
+	@mixin .List.inline > .List-item;
+	margin-left: $gutter * 2;
+
+	&:first-child {
+		margin-left: 0;
+	}
+}
+
+.SocialBtns > li.dem {
+	display: none;
+}
