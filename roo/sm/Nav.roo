@@ -46,8 +46,8 @@
 	}
 }
 
-.Nav.content {
-	margin: 0 0 30px;
+.Nav.content>.Nav-list {
+	margin-top: 0;
 }
 
 @media $mq-lt-sm {
