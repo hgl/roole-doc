@@ -9,7 +9,7 @@ gh-pages:
 	git clone -b gh-pages git@github.com:curvedmark/roole-doc.git gh-pages
 
 css: | node_modules
-	@roole --prefixes '' -o site/css roo/style.roo
+	@node_modules/.bin/roole --prefixes '' -o site/css roo/style.roo
 	@node_modules/.bin/autoprefixer site/css/style.css
 	@node_modules/.bin/cleancss -o site/css/style.css site/css/style.css
 	@node_modules/.bin/cleancss -o site/css/codemirror.css node_modules/codemirror/lib/codemirror.css
