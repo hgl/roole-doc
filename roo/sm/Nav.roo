@@ -1,11 +1,11 @@
 .Nav {
 	font-size: 16px;
-	direction: rtl;
 }
 
 .Nav-title {
 	position: absolute;
 	top: ($height-global - 30px) / 2;
+	right: $gutter;
 	z-index: 200;
 	direction: ltr;
 	font-size: inherit;
@@ -21,10 +21,6 @@
 	text-transform: uppercase;
 	padding: 0 $gutter;
 	margin-right: -$gutter;
-}
-
-.Nav-list {
-	direction: ltr;
 }
 
 @media $mq-lt-sm {
@@ -50,7 +46,7 @@
 	}
 }
 
-.Nav.content > .Nav-list {
+.Nav.content {
 	margin: 0 0 30px;
 }
 

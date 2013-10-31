@@ -8,6 +8,7 @@
 		@mixin .List.hor;
 		position: fixed;
 		top: 0;
+		right: $gutter;
 		z-index: 200;
 	}
 

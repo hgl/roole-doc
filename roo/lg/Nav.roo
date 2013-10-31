@@ -1,0 +1,6 @@
+@media $mq-gt-md {
+    .Nav-list {
+        right: 50%;
+        margin-right: -$width-min / 2 + $gutter;
+    }
+}
