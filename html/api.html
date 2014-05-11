@@ -99,7 +99,7 @@ layout: default
 				});
 			</code></pre>
 		</figure>
-		<p>The function will be passed the <code>roole</code> object.</p>
+		<p>The function will be passed to the <code>roole</code> object.</p>
 		<p>Node.js authors should export this function, and let users pass this function to <code>roole.use()</code> themselves.</p>
 		<figure class="Snippet">
 			<pre class="Snippet-text lang-javascript"><code>
@@ -120,7 +120,7 @@ layout: default
 		</ul>
 		<p>The returning value of this function becomes the returning value of the builtin function. <a href="http://promises-aplus.github.io/promises-spec/">Promises</a> are recgonized.</p>
 		<p>When a primitive value (or a promise whose fulfilling value is a primitive value) is returned, it will be converted to Roole values if possible. <code>null</code> and numbers are converted directly. <code>undefined</code> is converted to <code>null</code>. Strings are parsed. For example, returning <code>"'string'"</code> will result <code>'string'</code> in Roole.</p>
-		<p>A JSON oject representing a Roole node can also be returned. Node utilities function of the <a href="https://github.com/curvedmark/roole-node">roole-node</a> project may come in handy when you do that.</p>
+		<p>A JSON object representing a Roole node can also be returned. Node utilities function of the <a href="https://github.com/curvedmark/roole-node">roole-node</a> project may come in handy when you do that.</p>
 		<p>To indicate an error, throw a <code>RooleError</code> object which can be found in the <a href="https://github.com/curvedmark/roole-error">roole-error</a> project. In addition to the error message, pass it the responsible Roole node to indicate the error location.</p>
 		<p>See the <a href="https://github.com/curvedmark/roole-builtin">roole-builtin</a> project for how builtin functions come with Roole are written.</p>
 		<a class="Bookmark" id="ast"></a>
@@ -136,9 +136,9 @@ layout: default
 			</code></pre>
 		</figure>
 		<p>The passed function will get two arguments: a JSON object presenting the abstract syntax tree and the <code>options</code> object passed to <code>Roole.compile()</code>.</p>
-		<p>To traverse the abstract syntax tree, you are enouraged to use <a href="https://github.com/curvedmark/tree-transformer">tree-transformer</a> or <a href="https://github.com/curvedmark/tree-transformer-async">tree-transformer-async</a> depending on whether or not nodes are transformed asynchronously.</p>
+		<p>To traverse the abstract syntax tree, you are encouraged to use <a href="https://github.com/curvedmark/tree-transformer">tree-transformer</a> or <a href="https://github.com/curvedmark/tree-transformer-async">tree-transformer-async</a> depending on whether or not nodes are transformed asynchronously.</p>
 		<p>For example, <a href="https://github.com/curvedmark/roole-evaluator">roole-evaluator</a> uses tree-transformer-async to evaluate nodes asynchronously, and <a href="https://github.com/curvedmark/roole-compiler">roole-compiler</a> uses tree-transformer to compile abstract syntax trees into strings synchronously.</p>
-		<p>The returning value is the modified abstract syntax tree. <a href="http://promises-aplus.github.io/promises-spec/">Promises</a> are regonized.</p>
+		<p>The returning value is the modified abstract syntax tree. <a href="http://promises-aplus.github.io/promises-spec/">Promises</a> are recognized.</p>
 		<p>To indicate an error, throw a <code>RooleError</code> object which can be found in the <a href="https://github.com/curvedmark/roole-error">roole-error</a> project. In addition to the error message, pass it the responsible Roole node to indicate the error location.</p>
 	</main>
 </div>
